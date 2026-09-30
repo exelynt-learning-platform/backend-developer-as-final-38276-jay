@@ -40,9 +40,10 @@ spring:
 application:
   security:
     jwt:
-      secret-key: ${JWT_SECRET_KEY:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      secret-key: ${JWT_SECRET_KEY}
       expiration: ${JWT_EXPIRATION:86400000}
-
+    cors:
+       allowed-origins: ${ALLOWED_HOSTS:http://localhost:3000,http://localhost:4200}
 
 logging:
   level:
