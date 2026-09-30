@@ -31,19 +31,30 @@ class ReservationControllerSecurityReservationControllerTest {
     @Test
     @WithMockUser(username = "user@booking.com", roles = "USER")
     void createResource_AsUserRole_ShouldReturnForbiddenHttpStatus() throws Exception {
+        User mockUser = new User();
+        mockUser.setEmail("user@booking.local");
+        mockUser.setRole(Role.ROLE_USER);
+
         mockMvc.perform(post("/api/v1/resources")
+                        .with(user(mockUser)) 
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Conference Auditorium X\",\"type\":\"Room\"}"))
+                        .content("{\"name\":\"Conference Auditorium X\",\"type\":\"ROOM\",\"pricePerHour\":50.00,\"available\":true}"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(username = "admin@booking.com", roles = "ADMIN")
     void getReservations_WithAuthorizedContext_ShouldReturnSuccess() throws Exception {
+         
+        User mockAdmin = new User();
+        mockAdmin.setEmail("admin@booking.local");
+        mockAdmin.setRole(Role.ROLE_ADMIN);
+
         when(reservationService.getReservations(any(), any(), any(), any(User.class), any()))
                 .thenReturn(Page.empty());
 
         mockMvc.perform(get("/api/v1/reservations")
+                        .with(user(mockAdmin))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
