@@ -25,6 +25,8 @@ class ReservationServiceReservationControllerTest {
     @Mock private ResourceRepository resourceRepository;
     @Mock private UserRepository userRepository;
 
+    @Mock private ReservationRepository reservationRepository; 
+
     @InjectMocks
     private ReservationService reservationService;
 
