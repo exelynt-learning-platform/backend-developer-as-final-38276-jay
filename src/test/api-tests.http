@@ -1,0 +1,48 @@
+### 1. Authenticate as Admin (Acquires Auth Token Vector)
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@booking.local",
+  "password": "admin123"
+}
+
+> {% client.global.set("admin_token", response.body.token); %}
+
+### 2. Authenticate as Standard User
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@booking.local",
+  "password": "user123"
+}
+
+> {% client.global.set("user_token", response.body.token); %}
+
+### 3. Create a New Bookable Resource (Requires Admin Token)
+POST http://localhost:8080/api/v1/resources
+Content-Type: application/json
+Authorization: Bearer {{admin_token}}
+
+{
+  "name": "Conference Room A",
+  "type": "ROOM",
+  "pricePerHour": 75.50,
+  "available": true
+}
+
+### 4. Fetch All Resources (Public Access Path - No Token Needed)
+GET http://localhost:8080/api/v1/resources
+Accept: application/json
+
+### 5. Create a New Reservation (Requires User Token)
+POST http://localhost:8080/api/v1/reservations
+Content-Type: application/json
+Authorization: Bearer {{user_token}}
+
+{
+  "resourceId": 1,
+  "startTime": "2026-10-15T09:00:00",
+  "endTime": "2026-10-15T12:00:00"
+}
