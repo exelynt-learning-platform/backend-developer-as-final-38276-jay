@@ -50,4 +50,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleFallback(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "An unexpected server condition occurred."));
     }
-}
+
+
+ @ExceptionHandler(RuntimeException.class) 
+    public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "An internal application error occurred."));
+    }}
