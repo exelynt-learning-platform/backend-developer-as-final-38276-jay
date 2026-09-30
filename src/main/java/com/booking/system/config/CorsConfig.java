@@ -10,6 +10,10 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
+    
+    @Value("${application.security.cors.allowed-origins:http://localhost:3000,http://localhost:4200}")
+    private List<String> allowedOrigins;
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -17,8 +21,7 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
 
-        // Replace "*" with your explicit frontend domains (e.g., "http://localhost:3000") in production
-        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedOrigins(allowedOrigins);
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
