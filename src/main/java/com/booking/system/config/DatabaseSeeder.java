@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("!prod")    
 public class DatabaseSeeder implements CommandLineRunner {
 
     private final UserRepository userRepository;
