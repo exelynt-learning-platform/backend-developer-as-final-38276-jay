@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.util.HexFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,10 @@ public class JwtService {
     private long jwtExpiration;
 
     private SecretKey getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+         if (this.secretKey == null || this.secretKey.isBlank()) {
+            throw new IllegalStateException("JWT secret signing key configuration parameter is missing.");
+        }
+        byte[] keyBytes = HexFormat.of().parseHex(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
