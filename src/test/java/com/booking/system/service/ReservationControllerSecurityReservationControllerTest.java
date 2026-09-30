@@ -8,9 +8,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean; // New import for 3.4+
+import org.springframework.test.context.bean.override.mockito.MockitoBean; 
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import com.booking.system.domain.Role;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
